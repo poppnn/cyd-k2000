@@ -23,5 +23,5 @@ pio run -t upload
 ```
 
 - Calibrage : `CAL_OFFSET` dans `src/main.cpp`, à ajuster avec un sonomètre de référence.
-- CYD à 2 USB : remplacer `ILI9341_2_DRIVER` par `ST7789_DRIVER` dans `platformio.ini`.
+- Prévu pour le CYD 2,8" à touch résistif (ILI9341 avec inversion). Couleurs fausses sur une autre version : retirer `TFT_INVERSION_ON` dans `platformio.ini`.
 - Mesure non pondérée (dB Z, pas dB(A)).

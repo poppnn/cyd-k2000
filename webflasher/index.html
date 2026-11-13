@@ -64,7 +64,7 @@
     <h2 id="info-title">Bon à savoir</h2>
     <ul>
       <li>Mesure en dB non pondéré (pas dB(A)), à quelques dB près : calibre <code>CAL_OFFSET</code> dans <code>src/main.cpp</code> avec un sonomètre de référence.</li>
-      <li>Le flasher contient la version écran ILI9341. Écran noir ou couleurs fausses (CYD à 2 USB) : recompile avec <code>ST7789_DRIVER</code>.</li>
+      <li>Prévu pour le CYD 2,8" à touch résistif (ILI9341, couleurs inversées corrigées). Couleurs fausses sur une autre version : retire <code>TFT_INVERSION_ON</code> dans <code>platformio.ini</code> et recompile.</li>
       <li>Le niveau est aussi envoyé sur le port série (115200 bauds).</li>
       <li>Sources : <a href="https://github.com/poppnn/cyd-k2000">github.com/poppnn/cyd-k2000</a>.</li>
     </ul>
