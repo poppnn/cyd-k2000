@@ -5,6 +5,7 @@
 #include <Arduino.h>
 #include <TFT_eSPI.h>
 #include <driver/i2s.h>
+#include "dbmath.h"
 
 // INMP441 : -26 dBFS à 94 dB SPL -> dB SPL = dBFS + 120. Ajuster avec un sonomètre de référence.
 constexpr float CAL_OFFSET = 120.0f;
@@ -39,13 +40,7 @@ void audioTask(void *) {
   for (;;) {
     size_t got = 0;
     if (i2s_read(I2S_NUM_0, buf, sizeof buf, &got, portMAX_DELAY) != ESP_OK || got < 4) continue;
-    int n = got / 4;
-    double mean = 0, sq = 0;
-    for (int i = 0; i < n; i++) mean += buf[i] >> 8;  // 24 bits utiles en haut du mot
-    mean /= n;
-    for (int i = 0; i < n; i++) { double v = (buf[i] >> 8) - mean; sq += v * v; }
-    double rms = sqrt(sq / n) / 8388608.0;
-    g_db = 20 * log10(rms + 1e-9) + CAL_OFFSET;  // dB Z (non pondéré)
+    g_db = blockDb(buf, got / 4, CAL_OFFSET);
   }
 }
 

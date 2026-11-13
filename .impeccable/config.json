@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "webflasher/index.html"
+        ],
+        "createdAt": "2026-11-13T21:55:43.859Z",
+        "reason": "assistant: glow on the K2000 scanner lights is the effect the user asked for"
+      }
+    ]
+  }
+}

@@ -28,6 +28,7 @@ jobs:
           path: ~/.platformio
           key: pio-${{ runner.os }}-${{ hashFiles('platformio.ini') }}
       - run: pip install platformio
+      - run: pio test -e native
       - run: pio run
       - name: Site du web flasher
         run: |
