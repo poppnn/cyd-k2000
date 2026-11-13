@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CYD K2000 Flasher</title>
+<script type="module" src="https://unpkg.com/esp-web-tools@10.1.0/dist/web/install-button.js?module"></script>
+<style>
+  :root { --bg: #070707; --panel: #121212; --border: #3a0d0d; --text: #ececec; --muted: #a3a3a3; --accent: #ff2a1a; --warn: #fbbf24; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 680px; margin: 0 auto; padding: 24px 16px 48px; display: grid; gap: 16px; }
+  h1 { margin: 0; color: var(--accent); font-size: 1.6rem; letter-spacing: .04em; }
+  h2 { margin: 0 0 8px; font-size: 1.05rem; }
+  p { margin: 0; }
+  .lead { color: var(--muted); }
+  section { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  ol, ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+  code { background: #1b1b1b; border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: .9em; }
+  table { border-collapse: collapse; width: 100%; }
+  td, th { border: 1px solid var(--border); padding: 4px 8px; text-align: left; }
+  .install { display: grid; gap: 12px; justify-items: start; }
+  esp-web-install-button button[slot=activate] { min-height: 48px; padding: 10px 22px; border: 0; border-radius: 8px; background: var(--accent); color: #fff; font: 600 1rem system-ui, sans-serif; cursor: pointer; }
+  .warn { color: var(--warn); }
+  a { color: var(--accent); }
+  .scanner { display: flex; gap: 4px; height: 14px; }
+  .scanner i { flex: 1; background: #2a0606; border-radius: 2px; animation: kitt 1.2s ease-in-out infinite alternate; }
+  @keyframes kitt { 0%, 18% { background: #2a0606; } 20% { background: var(--accent); box-shadow: 0 0 10px var(--accent); } 40%, 100% { background: #2a0606; } }
+  @media (prefers-reduced-motion: reduce) { .scanner i { animation: none; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>CYD K2000 dB</h1>
+    <p class="lead">Décibelmètre pour Cheap Yellow Display (ESP32-2432S028R), affiché façon K2000. Se flashe depuis le navigateur.</p>
+  </header>
+  <div class="scanner" aria-hidden="true"><i></i><i style="animation-delay:.1s"></i><i style="animation-delay:.2s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.4s"></i><i style="animation-delay:.5s"></i><i style="animation-delay:.6s"></i><i style="animation-delay:.7s"></i></div>
+
+  <section class="install" aria-labelledby="install-title">
+    <h2 id="install-title">Installer</h2>
+    <p>Branche le CYD en USB, puis :</p>
+    <esp-web-install-button manifest="manifest.json">
+      <button slot="activate">Connecter et flasher</button>
+      <span slot="unsupported" class="warn">Navigateur non compatible : utilise Chrome ou Edge sur ordinateur (Web Serial).</span>
+      <span slot="not-allowed" class="warn">Le flash demande une page en HTTPS.</span>
+    </esp-web-install-button>
+    <p class="lead">Si le port n'apparaît pas, installe le pilote USB CH340 de la carte.</p>
+  </section>
+
+  <section aria-labelledby="wiring-title">
+    <h2 id="wiring-title">Micro INMP441 (obligatoire, le CYD n'en a pas)</h2>
+    <table>
+      <tr><th>INMP441</th><th>CYD</th></tr>
+      <tr><td>SCK</td><td>GPIO22 (CN1)</td></tr>
+      <tr><td>WS</td><td>GPIO27 (CN1)</td></tr>
+      <tr><td>SD</td><td>GPIO35 (P3)</td></tr>
+      <tr><td>L/R</td><td>GND</td></tr>
+      <tr><td>VDD / GND</td><td>3V3 / GND</td></tr>
+    </table>
+  </section>
+
+  <section aria-labelledby="info-title">
+    <h2 id="info-title">Bon à savoir</h2>
+    <ul>
+      <li>Mesure en dB non pondéré (pas dB(A)), à quelques dB près : calibre <code>CAL_OFFSET</code> dans <code>src/main.cpp</code> avec un sonomètre de référence.</li>
+      <li>Le flasher contient la version écran ILI9341. Écran noir ou couleurs fausses (CYD à 2 USB) : recompile avec <code>ST7789_DRIVER</code>.</li>
+      <li>Le niveau est aussi envoyé sur le port série (115200 bauds).</li>
+      <li>Sources : <a href="https://github.com/poppnn/cyd-k2000">github.com/poppnn/cyd-k2000</a>.</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>
